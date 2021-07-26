@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'bloc/navigation_bloc.dart';
+import 'bloc/book_bloc.dart';
 
 void main() {
   Bloc.observer = SimpleBlocObserver();
 
   runApp(
     BlocProvider(
-      create: (context) => NavigationBloc(),
+      create: (context) => BookBloc(),
       child: BooksApp(),
     ),
   );
@@ -51,7 +51,7 @@ class BooksApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Books App',
-      home: BlocBuilder<NavigationBloc, NavigationState>(
+      home: BlocBuilder<BookBloc, BookState>(
         builder: (context, state) {
           return Navigator(
             pages: [
@@ -61,7 +61,7 @@ class BooksApp extends StatelessWidget {
                   books: books,
                 ),
               ),
-              if (state is NavigationSelectedBook)
+              if (state is BookSelectedBook)
                 MaterialPage(
                     key: ValueKey(state.selectedBook),
                     child: BookDetailsScreen(book: state.selectedBook))
@@ -71,7 +71,7 @@ class BooksApp extends StatelessWidget {
                 return false;
               }
 
-              BlocProvider.of<NavigationBloc>(context).add(BackToList());
+              BlocProvider.of<BookBloc>(context).add(BackToList());
 
               return true;
             },
@@ -97,7 +97,7 @@ class BooksListScreen extends StatelessWidget {
             ListTile(
               title: Text(book.title),
               subtitle: Text(book.author),
-              onTap: () => context.read<NavigationBloc>().add(
+              onTap: () => context.read<BookBloc>().add(
                     BookSelected(book: book),
                   ),
             )

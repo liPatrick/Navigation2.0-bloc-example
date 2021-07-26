@@ -1,8 +1,8 @@
-part of 'navigation_bloc.dart';
+part of 'book_bloc.dart';
 
 @immutable
-abstract class NavigationEvent extends Equatable {
-  const NavigationEvent({this.book});
+abstract class BookEvent extends Equatable {
+  const BookEvent({this.book});
 
   final Book? book;
 
@@ -10,7 +10,7 @@ abstract class NavigationEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class BookSelected extends NavigationEvent {
+class BookSelected extends BookEvent {
   const BookSelected({required this.book});
 
   final Book book;
@@ -19,7 +19,7 @@ class BookSelected extends NavigationEvent {
   List<Object> get props => [book];
 }
 
-class BackToList extends NavigationEvent {
+class BackToList extends BookEvent {
   const BackToList();
 
   @override
